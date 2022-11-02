@@ -1,6 +1,7 @@
+import { freemem } from "os";
 import { useState } from "react";
 import { Friend } from "../models/Friend";
-import { friendGroup, addFriend } from "../models/friendGroup";
+import { friendGroup, addFriend, deleteFriend } from "../models/friendGroup";
 import FriendForm from "./FriendForm";
 
 function FriendList() {
@@ -21,11 +22,23 @@ function FriendList() {
         addFriend(friend);
   }
 
+  function handleDelete(name: string){
+    // update the UI
+    const index = friends.findIndex(friend => friend.name === name);
+    setFriends(prev => {
+      const newList = prev.slice(0);
+      newList.splice(index, 1);
+      return newList;
+    });
+    // and remove it from the "database"
+    deleteFriend(index);
+  }
+
   return (
     <div className="FriendList">
       <ul>
         {friends.map((friend, i) => 
-        <li key={i}>{friend.name} - {friend.favoriteSong}</li>
+        <li key={i}>{friend.name} - {friend.favoriteSong} <button onClick={() => handleDelete(friend.name)}>Delete Friend</button></li>
         )
         }
       </ul>

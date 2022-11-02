@@ -14,7 +14,6 @@ export function addFriend(friend: Friend){
 }
 
 // could also add other CRUD functions like delete, edit, etc.
-export function deleteFriend(id: number){
-  // use the id to find the correct friend
-  // and delete it
+export function deleteFriend(index: number){
+  friendGroup.slice(index, 1);
 }
